@@ -27,6 +27,7 @@ func main() {
 		panic(err)
 	}
 	c.Login(os.Getenv("XTB_LOGIN"), os.Getenv("XTB_PASSWORD"))
+	c.GetAllSymbols()
 	c.Logout()
 	c.Close()
 }
