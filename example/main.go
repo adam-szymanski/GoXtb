@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
 	"net/url"
 	"os"
@@ -23,12 +22,11 @@ func main() {
 	u := url.URL{Scheme: "wss", Host: *addr, Path: "/demo"}
 	log.Printf("connecting to %s", u.String())
 
-	c, err := client.NewClient(&u)
+	c, err := client.NewClient(&u, true)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(c.Login(os.Getenv("XTB_LOGIN"), os.Getenv("XTB_PASSWORD")))
-	res, err := c.Logout()
-	fmt.Printf("%+v %+v\n", res, err)
+	c.Login(os.Getenv("XTB_LOGIN"), os.Getenv("XTB_PASSWORD"))
+	c.Logout()
 	c.Close()
 }
