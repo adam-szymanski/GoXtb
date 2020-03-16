@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/adam-szymanski/GoXtb/client/commands"
 	"github.com/gorilla/websocket"
@@ -56,7 +57,7 @@ func (c *Client) Close() error {
 
 // COMMANDS
 
-// Login performs login request described here: http://developers.xstore.pro/documentation/#login
+// Login performs login command described here: http://developers.xstore.pro/documentation/#login
 func (c *Client) Login(user, password string) (*commands.LoginResult, error) {
 	res := &commands.LoginResult{}
 	err := c.executeCommand(commands.NewLoginCommand(user, password), &res)
@@ -66,7 +67,7 @@ func (c *Client) Login(user, password string) (*commands.LoginResult, error) {
 	return res, nil
 }
 
-// Login performs loout request described here: http://developers.xstore.pro/documentation/#logout
+// Login performs loout command described here: http://developers.xstore.pro/documentation/#logout
 func (c *Client) Logout() (*commands.Result, error) {
 	res := &commands.Result{}
 	err := c.executeCommand(commands.NewLogoutCommand(), &res)
@@ -76,10 +77,20 @@ func (c *Client) Logout() (*commands.Result, error) {
 	return res, nil
 }
 
-// GetAllSymbols performs getAllSymbols request described here: http://developers.xstore.pro/documentation/#getAllSymbols
+// GetAllSymbols performs getAllSymbols command described here: http://developers.xstore.pro/documentation/#getAllSymbols
 func (c *Client) GetAllSymbols() (*commands.GetAllSymbolsResult, error) {
 	res := &commands.GetAllSymbolsResult{}
 	err := c.executeCommand(commands.NewGetAllSymbolsCommand(), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetChartLastRange performs getChartLastRange command described here: http://developers.xstore.pro/documentation/#getChartLastRequest
+func (c *Client) GetChartLastRange(period commands.Period, start time.Time, symbol string) (*commands.GetChartLastResult, error) {
+	res := &commands.GetChartLastResult{}
+	err := c.executeCommand(commands.NewGetChartLastRequestCommand(period, start, symbol), &res)
 	if err != nil {
 		return nil, err
 	}

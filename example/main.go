@@ -6,8 +6,10 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
+	"time"
 
 	"github.com/adam-szymanski/GoXtb/client"
+	"github.com/adam-szymanski/GoXtb/client/commands"
 )
 
 var addr = flag.String("addr", "ws.xapi.pro", "http service address")
@@ -27,7 +29,7 @@ func main() {
 		panic(err)
 	}
 	c.Login(os.Getenv("XTB_LOGIN"), os.Getenv("XTB_PASSWORD"))
-	c.GetAllSymbols()
+	c.GetChartLastRange(commands.PERIOD_M1, time.Now(), "US500")
 	c.Logout()
 	c.Close()
 }
