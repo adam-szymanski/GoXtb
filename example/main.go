@@ -29,7 +29,7 @@ func main() {
 		panic(err)
 	}
 	c.Login(os.Getenv("XTB_LOGIN"), os.Getenv("XTB_PASSWORD"))
-	c.GetChartLastRange(commands.PERIOD_M1, time.Now(), "US500")
+	c.GetChartRangeRequest(commands.PERIOD_M15, time.Now().Add(-time.Hour), "US500", time.Now(), 0)
 	c.Logout()
 	c.Close()
 }

@@ -12,14 +12,14 @@ type RateInfoRecord struct {
 	Vol       float64 // Volume in lots
 }
 
-type GetCharLastResultReturnData struct {
+type GetCharResultReturnData struct {
 	Digits    int
 	RateInfos []RateInfoRecord
 }
 
-type GetChartLastResult struct {
+type GetChartResult struct {
 	Result
-	ReturnData GetCharLastResultReturnData
+	ReturnData GetCharResultReturnData
 }
 
 type ChartLastInfoRecord struct {

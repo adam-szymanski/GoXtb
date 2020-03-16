@@ -88,9 +88,19 @@ func (c *Client) GetAllSymbols() (*commands.GetAllSymbolsResult, error) {
 }
 
 // GetChartLastRange performs getChartLastRange command described here: http://developers.xstore.pro/documentation/#getChartLastRequest
-func (c *Client) GetChartLastRange(period commands.Period, start time.Time, symbol string) (*commands.GetChartLastResult, error) {
-	res := &commands.GetChartLastResult{}
+func (c *Client) GetChartLastRange(period commands.Period, start time.Time, symbol string) (*commands.GetChartResult, error) {
+	res := &commands.GetChartResult{}
 	err := c.executeCommand(commands.NewGetChartLastRequestCommand(period, start, symbol), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetChartRangeRequest performs getChartRangeRequest command described here: http://developers.xstore.pro/documentation/#getChartRangeRequest
+func (c *Client) GetChartRangeRequest(period commands.Period, start time.Time, symbol string, end time.Time, ticks int) (*commands.GetChartResult, error) {
+	res := &commands.GetChartResult{}
+	err := c.executeCommand(commands.NewGetChartRangeRequestCommand(period, start, symbol, end, ticks), &res)
 	if err != nil {
 		return nil, err
 	}
