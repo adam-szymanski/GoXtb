@@ -106,3 +106,53 @@ func (c *Client) GetChartRangeRequest(period commands.Period, start time.Time, s
 	}
 	return res, nil
 }
+
+// GetServerTimeRequest performs getServerTime command described here: http://developers.xstore.pro/documentation/#getServerTime
+func (c *Client) GetServerTimeRequest() (*commands.GetServerTimeResult, error) {
+	res := &commands.GetServerTimeResult{}
+	err := c.executeCommand(commands.NewGetServerTimeRequestCommand(), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetVersionRequest performs getVersion command described here: http://developers.xstore.pro/documentation/#getVersion
+func (c *Client) GetVersionRequest() (*commands.GetVersionResult, error) {
+	res := &commands.GetVersionResult{}
+	err := c.executeCommand(commands.NewGetVersionRequestCommand(), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetProfitCalculationRequest performs getProfitCalculation command described here: http://developers.xstore.pro/documentation/#getProfitCalculation
+func (c *Client) GetProfitCalculationRequest(closePrice float32, cmd uint8, openPrice float32, symbol string, volume float32) (*commands.GetProfitCalculationResult, error) {
+	res := &commands.GetProfitCalculationResult{}
+	err := c.executeCommand(commands.NewGetProfitCalculationRequestCommand(closePrice, cmd, openPrice, symbol, volume), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetTradesRequest performs getTrades command described here: http://developers.xstore.pro/documentation/#getTrades
+func (c *Client) GetTradesRequest(openedOnly bool) (*commands.GetTradesResult, error) {
+	res := &commands.GetTradesResult{}
+	err := c.executeCommand(commands.NewGetTradesRequestCommand(openedOnly), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+// TradeTransactionRequest performs tradeTransaction command described here: http://developers.xstore.pro/documentation/#tradeTransaction
+func (c *Client) TradeTransactionRequest(cmd uint8, customComment string, expiration int64, offset int, order uint, price float32, sl float32, symbol string, tp float32, transactionType uint8, volume float32) (*commands.TradeTransactionResult, error) {
+	res := &commands.TradeTransactionResult{}
+	err := c.executeCommand(commands.NewTradeTransactionRequestCommand(cmd, customComment, expiration, offset, order, price, sl, symbol, tp, transactionType, volume), &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
